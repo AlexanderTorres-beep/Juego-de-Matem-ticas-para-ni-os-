@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title> 🌟 Aventura de los Números Mágicos</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+
+* {
+
+margen: 0;
+
+relleno: 0;
+
+box-size: border-box;
+
+}
+
+
+cuerpo {
+
+font-family: 'Nunito', sans-serif;
+
+fondo: gradiente lineal(135 grados, #667eea 0%, #764ba2 100%);
+
+altura mínima: 100vh;
+
+desbordamiento-x: oculto;
+
+}
+
+
+.estrellas {
+
+posición: fija;
+
+superior: 0;
+
+izquierda: 0;
+
+ancho: 100%;
+
+altura: 100%;
+
+eventos de puntero: ninguno;
+
+desbordamiento: oculto;
+
+índice z: 0;
+
+}
+
+
+.estrella {
+
+posición: absoluta;
+
+ancho: 4px;
+
+altura: 4px;
+
+fondo: blanco;
+
+radio de borde: 50%;
+
+animación: centelleo 3s infinito;
+
+}
+
+
+@keyframes twinkle {
+
+0%, 100% { opacidad: 0.3; transformación: escala(1); }
+
+50% { opacidad: 1; transformación: escala(1.5); }
+
+}
+
+
+.contenedor {
+
+posición: relativa;
+
+índice z: 1;
+
+ancho máximo: 900px;
+
+margen: 0 automático;
+
+relleno: 20px;
+
+}
+
+
+.encabezado {
+
+alineación de texto: centro;
+
+color: blanco;
+
+margen inferior: 30px;
+
+animación: reboteEn 1s de facilidad;
+
+}
+
+
+@keyframes bounceIn {
+
+0% { transformar: escala(0.3); opacidad: 0; }
+
+50% { transformar: escala(1.05); }
+
+100% { transformar: escala(1); opacidad: 1; }
+
+}
+
+
+h1 {
+
+tamaño de fuente: 2,5em;
+
+text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+
+margen inferior: 10px;
+
+}
+
+
+.subtítulo {
+
+tamaño de fuente: 1.2em;
+
+opacidad: 0,9;
+
+}
+
+
+.menu-grid {
+
+mostrar: cuadrícula;
+
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+espacio: 20px;
+
+margen inferior: 30px;
+
+}
+
+
+.tarjeta-de-juego {
+
+fondo: blanco;
+
+radio de borde: 20px;
+
+relleno: 25px;
+
+alineación de texto: centro;
+
+cursor: puntero;
+
+transición: todos 0,3 s de facilidad;
+
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+borde: 4px sólido transparente;
+
+}
+
+
+.tarjeta-de-juego:hover {
+
+transformar: trasladarY(-10px) rotar(2deg);
+
+color del borde: #ffd700;
+
+box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+
+}
+
+
+.game-icon {
+
+tamaño de fuente: 3,5em;
+
+margen inferior: 15px;
+
+mostrar: bloque;
+
+}
+
+
+.título-del-juego {
+
+tamaño de fuente: 1,3em;
+
+color: #333;
+
+grosor de fuente: 700;
+
+margen inferior: 8px;
+
+}
+
+
+.game-desc {
+
+tamaño de fuente: 0,9em;
+
+color: #666;
+
+}
+
+
+.área-de-juego {
+
+fondo: blanco;
+
+radio de borde: 25px;
+
+relleno: 30px;
+
+mostrar: ninguno;
+
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+
+animación: deslizamiento hacia arriba 0,5 s de facilidad;
+
+}
+
+
+@keyframes slideUp {
+
+desde { opacidad: 0; transformar: traducirY(50px); }
+
+a { opacidad: 1; transformar: traducirY(0); }
+
+}
+
+
+.back-btn {
+
+fondo: #ff6b6b;
+
+color: blanco;
+
+borde: ninguno;
+
+relleno: 12px 25px;
+
+radio de borde: 25px;
+
+tamaño de fuente: 1em;
+
+cursor: puntero;
+
+margen inferior: 20px;
+
+grosor de fuente: 700;
+
+transición: todos 0,3s;
+
+}
+
+
+.back-btn:hover {
+
+fondo: #ff5252;
+
+transformar: escala(1.05);
+
+}
+
+
+.score-board {
+
+pantalla: flexible;
+
+justificar-contenido: espacio-entre;
+
+alinear-elementos: centro;
+
+fondo: gradiente lineal(90deg, #ffd700, #ffed4e);
+
+relleno: 15px 25px;
+
+radio de borde: 15px;
+
+margen inferior: 25px;
+
+grosor de fuente: 700;
+
+tamaño de fuente: 1.2em;
+
+color: #333;
+
+}
+
+
+.stars-display {
+
+color: #ff6b6b;
+
+}
+
+
+/* Juego 1: Contar Objetos */
+
+.área-de-conteo {
+
+alineación de texto: centro;
+
+}
+
+
+.contenedor-de-conteo {
+
+pantalla: flexible;
+
+flex-wrap: envoltura;
+
+justificar-contenido: centro;
+
+espacio: 15px;
+
+margen: 30px 0;
+
+altura mínima: 150px;
+
+alinear-elementos: centro;
+
+}
+
+
+.count-item {
+
+tamaño de fuente: 3em;
+
+animación: popIn 0.5s ease;
+
+cursor: puntero;
+
+transición: transformación 0,2s;
+
+}
+
+
+.count-item:hover {
+
+transformar: escala(1.3) rotar(10 grados);
+
+}
+
+
+@keyframes popIn {
+
+0% { transformar: escala(0); }
+
+80% { transformar: escala(1.2); }
+
+100% { transformar: escala(1); }
+
+}
+
+
+.opciones-de-número {
+
+pantalla: flexible;
+
+justificar-contenido: centro;
+
+espacio: 15px;
+
+flex-wrap: envoltura;
+
+margen superior: 20px;
+
+}
+
+
+.número-botón {
+
+ancho: 70px;
+
+altura: 70px;
+
+radio de borde: 50%;
+
+borde: ninguno;
+
+tamaño de fuente: 1,8em;
+
+grosor de fuente: 900;
+
+cursor: puntero;
+
+transición: todos 0,3s;
+
+fondo: gradiente lineal(135deg, #667eea, #764ba2);
+
+color: blanco;
+
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+}
+
+
+.number-btn:hover {
+
+transformar: escala(1.1);
+
+box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+
+}
+
+
+.number-btn.correct {
+
+fondo: #4cd964;
+
+animación: correctPulse 0,5s;
+
+}
+
+
+.número-botón.incorrecto {
+
+fondo: #ff6b6b;
+
+animación: agitar 0,5 s;
+
+}
+
+
+@keyframes correctPulse {
+
+0%, 100% { transformar: escala(1); }
+
+50% { transformar: escala(1.3); }
+
+}
+
+
+@keyframes agitar {
+
+0%, 100% { transformar: traducirX(0); }
+
+25% { transform: translateX(-10px); }
+
+75% { transform: translateX(10px); }
+
+}
+
+
+/* Juego 2: Sumas */
+
+.problema-matemático {
+
+tamaño de fuente: 3em;
+
+alineación de texto: centro;
+
+margen: 30px 0;
+
+color: #333;
+
+grosor de fuente: 900;
+
+}
+
+
+.problema-matemático span {
+
+mostrar: bloque en línea;
+
+margen: 0 10px;
+
+color: #667eea;
+
+}
+
+
+.answer-input {
+
+ancho: 120px;
+
+altura: 80px;
+
+tamaño de fuente: 2,5em;
+
+alineación de texto: centro;
+
+borde: 4px sólido #ddd;
+
+radio de borde: 20px;
+
+esquema: ninguno;
+
+transición: todos 0,3s;
+
+grosor de fuente: 900;
+
+color: #333;
+
+}
+
+
+.answer-input:focus {
+
+color del borde: #667eea;
+
+transformar: escala(1.1);
+
+}
+
+
+.answer-input.correct {
+
+color del borde: #4cd964;
+
+fondo: #e8f5e9;
+
+}
+
+
+.answer-input.wrong {
+
+color del borde: #ff6b6b;
+
+fondo: #ffebee;
+
+animación: agitar 0,5 s;
+
+}
+
+
+.check-btn {
+
+fondo: gradiente lineal(135deg, #4cd964, #45b649);
+
+color: blanco;
+
+borde: ninguno;
+
+relleno: 15px 40px;
+
+tamaño de fuente: 1,3em;
+
+radio de borde: 30px;
+
+cursor: puntero;
+
+margen superior: 20px;
+
+grosor de fuente: 700;
+
+transición: todos 0,3s;
+
+box-shadow: 0 5px 20px rgba(76, 217, 100, 0.4);
+
+}
+
+
+.check-btn:hover {
+
+transformar: translateY(-3px);
+
+box-shadow: 0 8px 30px rgba(76, 217, 100, 0.6);
+
+}
+
+
+/* Juego 3: Restas con Manzanas */
+
+.sustracción-visual {
+
+pantalla: flexible;
+
+justificar-contenido: centro;
+
+alinear-elementos: centro;
+
+espacio: 40px;
+
+margen: 30px 0;
+
+flex-wrap: envoltura;
+
+}
+
+
+.cesta-de-manzanas {
+
+alineación de texto: centro;
+
+}
+
+
+.etiqueta-de-cesta {
+
+tamaño de fuente: 1.2em;
+
+color: #666;
+
+margen inferior: 10px;
+
+grosor de fuente: 700;
+
+}
+
+
+.manzanas {
+
+pantalla: flexible;
+
+flex-wrap: envoltura;
+
+justificar-contenido: centro;
+
+espacio: 5px;
+
+ancho máximo: 200px;
+
+altura mínima: 100px;
+
+relleno: 15px;
+
+fondo: #f5f5f5;
+
+radio de borde: 15px;
+
+}
+
+
+.manzana {
+
+tamaño de fuente: 2,5em;
+
+cursor: puntero;
+
+transición: todos 0,3s;
+
+selección del usuario: ninguna;
+
+}
+
+
+.apple:hover {
+
+transformar: escala(1.2);
+
+}
+
+
+.manzana.comida {
+
+opacidad: 0,3;
+
+transformar: escala(0.8);
+
+filtro: escala de grises (100%);
+
+}
+
+
+.signo-menos {
+
+tamaño de fuente: 3em;
+
+color: #ff6b6b;
+
+grosor de fuente: 900;
+
+}
+
+
+/* Juego 4: Secuencia */
+
+.contenedor-de-secuencia {
+
+pantalla: flexible;
+
+justificar-contenido: centro;
+
+alinear-elementos: centro;
+
+espacio: 15px;
+
+margen: 40px 0;
+
+flex-wrap: envoltura;
+
+}
+
+
+.secuencia-caja {
+
+ancho: 80px;
+
+altura: 80px;
+
+radio de borde: 15px;
+
+pantalla: flexible;
+
+alinear-elementos: centro;
+
+justificar-contenido: centro;
+
+tamaño de fuente: 2em;
+
+grosor de fuente: 900;
+
+transición: todos 0,3s;
+
+}
+
+
+.secuencia-caja.llena {
+
+fondo: gradiente lineal(135deg, #667eea, #764ba2);
+
+color: blanco;
+
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+}
+
+
+.secuencia-caja.vacía {
+
+fondo: #f0f0f0;
+
+borde: 3px punteado #ccc;
+
+cursor: puntero;
+
+}
+
+
+.secuencia-caja.vacía:hover {
+
+color del borde: #667eea;
+
+fondo: #e8eaf6;
+
+}
+
+
+.opciones-de-secuencia {
+
+pantalla: flexible;
+
+justificar-contenido: centro;
+
+espacio: 20px;
+
+margen superior: 30px;
+
+}
+
+
+.option-bubble {
+
+ancho: 60px;
+
+altura: 60px;
+
+radio de borde: 50%;
+
+fondo: gradiente lineal(135deg, #ffd700, #ffed4e);
+
+pantalla: flexible;
+
+alinear-elementos: centro;
+
+justificar-contenido: centro;
+
+tamaño de fuente: 1,5em;
+
+grosor de fuente: 900;
+
+cursor: puntero;
+
+transición: todos 0,3s;
+
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+color: #333;
+
+}
+
+
+.option-bubble:hover {
+
+transformar: escalar(1.2) rotar(10 grados);
+
+}
+
+
+.option-bubble.selected {
+
+fondo: #4cd964;
+
+color: blanco;
+
+transformar: escala(0.9);
+
+}
+
+
+/* Mensajes de feedback */
+
+.comentario {
+
+posición: fija;
+
+superior: 50%;
+
+izquierda: 50%;
+
+transformar: trasladar(-50%, -50%) escalar(0);
+
+fondo: blanco;
+
+relleno: 30px 50px;
+
+radio de borde: 25px;
+
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+
+alineación de texto: centro;
+
+índice z: 1000;
+
+transición: todos 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+
+.feedback.show {
+
+transformar: trasladar(-50%, -50%) escalar(1);
+
+}
+
+
+.feedback-icon {
+
+tamaño de fuente: 4em;
+
+margen inferior: 15px;
+
+}
+
+
+.texto-de-comentarios {
+
+tamaño de fuente: 1,5em;
+
+grosor de fuente: 700;
+
+color: #333;
+
+}
+
+
+.superposición {
+
+posición: fija;
+
+superior: 0;
+
+izquierda: 0;
+
+ancho: 100%;
+
+altura: 100%;
+
+fondo: rgba(0,0,0,0.5);
+
+mostrar: ninguno;
+
+Índice z: 999;
+
+}
+
+
+.superposición.mostrar {
+
+mostrar: bloque;
+
+}
+
+
+/* Confeti */
+
+.confeti {
+
+posición: fija;
+
+ancho: 10px;
+
+altura: 10px;
+
+superior: -10px;
+
+animación: caída de confeti 3s lineal hacia adelante;
+
+Índice z: 1001;
+
+}
+
+
+@keyframes confetti-fall {
+
+a {
+
+transformar: trasladarY(100vh) rotar(720deg);
+
+opacidad: 0;
+
+}
+
+}
+
+
+.instrucciones {
+
+fondo: #e3f2fd;
+
+relleno: 15px 20px;
+
+radio de borde: 15px;
+
+margen inferior: 20px;
+
+color: #1565c0;
+
+grosor de fuente: 600;
+
+borde izquierdo: 5px sólido #2196f3;
+
+}
+
+
+.barra-de-progreso {
+
+ancho: 100%;
+
+altura: 10px;
+
+fondo: #e0e0e0;
+
+radio de borde: 5px;
+
+margen inferior: 20px;
+
+desbordamiento: oculto;
+
+}
+
+
+.progress-fill {
+
+altura: 100%;
+
+fondo: gradiente lineal(90deg, #4cd964, #45b649);
+
+ancho: 0%;
+
+transición: ancho 0,5 s facilidad;
+
+radio de borde: 5px;
+
+}
+
+
+@media (max-width: 600px) {
+
+h1 { font-size: 1.8em; }
+
+.game-card { padding: 20px; }
+
+.problema-matemático { tamaño-de-fuente: 2em; }
+
+.number-btn { ancho: 60px; alto: 60px; tamaño de fuente: 1.5em; }
+
+}
+
+</style>
+
+</head>
+
+<cuerpo>
+
+<div class="stars" id="stars"></div>
+
+
+<div class="container">
+
+<div class="header">
+
+<h1> 🌟 Aventura de los Números Mágicos</h1>
+
+<p class="subtitle">¡Aprende jugando! Elige un juego y diviértete</p>
+
+</div>
+
+
+<!-- Menú Principal -->
+
+<div id="menú principal" clase="cuadrícula de menú">
+
+<div class="game-card" onclick="startGame('counting')">
+
+<span class="game-icon"> 🍎 </span>
+
+<div class="game-title">Contar Objetos</div>
+
+<div class="game-desc">Cuenta las frutas y elige el número correcto</div>
+
+</div>
+
+
+<div class="game-card" onclick="startGame('addition')">
+
+<span class="game-icon"> ➕ </span>
+
+<div class="game-title">Sumas Mágicas</div>
+
+<div class="game-desc">Resuelve sumas divertidas</div>
+
+</div>
+
+
+<div class="game-card" onclick="startGame('subtraction')">
+
+<span class="game-icon"> ➖ </span>
+
+<div class="game-title">Restas con Manzanas</div>
+
+<div class="game-desc">Comen manzanas y cuenta cuántas quedan</div>
+
+</div>
+
+
+<div class="game-card" onclick="startGame('sequence')">
+
+<span class="game-icon"> 🔢 </span>
+
+<div class="game-title">Secuencia Mágica</div>
+
+<div class="game-desc">Descubre el número que falta</div>
+
+</div>
+
+</div>
+
+
+<!-- Área de Juegos -->
+
+<div id="gameArea" class="game-area">
+
+<button class="back-btn" onclick="backToMenu()">← Volver al Menú</button>
+
+
+<div class="score-board">
+
+<span> ⭐ Puntuación: <span id="score">0</span></span>
+
+<span class="stars-display" id="starsCount"> 🌟🌟🌟 </span>
+
+<span>Nivel: <span id="level">1</span></span>
+
+</div>
+
+
+<div class="barra-de-progreso">
+
+<div class="progress-fill" id="progressBar"></div>
+
+</div>
+
+
+<div class="instructions" id="instructions"></div>
+
+
+<div id="gameContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- Modal de comentarios -->
+
+<div class="overlay" id="overlay"></div>
+
+<div class="feedback" id="feedback">
+
+<div class="feedback-icon" id="feedbackIcon"> 🎉 </div>
+
+<div class="feedback-text" id="feedbackText">¡Excelente!</div>
+
+</div>
+
+
+
+
+<script>
+
+// Variables globales
+
+let currentGame = '';
+
+sea ​​puntuación = 0;
+
+sea ​​nivel = 1;
+
+sea ​​problemaActual = {};
+
+sea ​​progreso = 0;
+
+
+const emojis = [' 🍎 ', ' 🍌 ', ' 🍇 ', ' 🍊 ', ' 🍓 ', ' 🥝 ', ' 🍑 ', ' 🍒 ', ' 🥕 ', ' 🌽 '];
+
+const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7', '#00b894'];
+
+
+// Crear estrellas de fondo
+
+función crearEstrellas() {
+
+const container = document.getElementById('stars');
+
+para (sea i = 0; i < 50; i++) {
+
+const estrella = document.createElement('div');
+
+estrella.className = 'estrella';
+
+estrella.estilo.izquierda = Math.random() * 100 + '%';
+
+estrella.estilo.superior = Math.random() * 100 + '%';
+
+estrella.estilo.retrasoAnimación = Math.random() * 3 + 's';
+
+contenedor.appendChild(estrella);
+
+}
+
+}
+
+
+crearEstrellas();
+
+
+// Iniciar juego
+
+función startGame(juego) {
+
+JuegoActual = juego;
+
+puntuación = 0;
+
+nivel = 1;
+
+progreso = 0;
+
+
+document.getElementById('mainMenu').style.display = 'none';
+
+document.getElementById('gameArea').style.display = 'block';
+
+document.getElementById('score').textContent = score;
+
+document.getElementById('level').textContent = level;
+
+
+actualizarProgreso();
+
+cargarJuego();
+
+}
+
+
+// Volver al menú
+
+función backToMenu() {
+
+document.getElementById('gameArea').style.display = 'none';
+
+document.getElementById('mainMenu').style.display = 'grid';
+
+JuegoActual = '';
+
+}
+
+
+// Actualizar barra de progreso
+
+función updateProgress() {
+
+document.getElementById('progressBar').style.width = progress + '%';
+
+}
+
+
+// Cargar juego específico
+
+función cargarJuego() {
+
+const content = document.getElementById('gameContent');
+
+const instrucciones = document.getElementById('instrucciones');
+
+contenido.innerHTML = '';
+
+
+cambiar(juegoactual) {
+
+caso 'conteo':
+
+instrucciones.textContent = 'Cuenta cuantas frutas hay y toca el número correcto';
+
+cargarJuegoDeConteo();
+
+romper;
+
+caso 'adición':
+
+instrucciones.textContent = 'Escribe la respuesta correcta y presiona Verificar';
+
+cargarJuegoAdicional();
+
+romper;
+
+caso 'resta':
+
+instrucciones.textContent = 'Toca las manzanas para "comerlas" y cuenta cuántas quedan';
+
+cargarJuegoDeRestracción();
+
+romper;
+
+caso 'secuencia':
+
+instrucciones.textContent = 'Descubre qué número falta en la secuencia';
+
+cargarSecuenciaJuego();
+
+romper;
+
+}
+
+}
+
+
+// Juego 1: Contar Objetos
+
+función loadCountingGame() {
+
+const content = document.getElementById('gameContent');
+
+const count = Math.floor(Math.random() * (5 + level * 2)) + 3;
+
+const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+
+problemaActual = { contador, respuesta: contador };
+
+
+let html = '<div class="counting-area">';
+
+html += '<div class="counting-container" id="countingContainer">';
+
+
+para (sea i = 0; i < count; i++) {
+
+html += `<span class="count-item" style="animation-delay: ${i * 0.1}s">${emoji}</span>`;
+
+}
+
+
+html += '</div>';
+
+html += '<div class="number-options" id="numberOptions"></div>';
+
+html += '</div>';
+
+
+contenido.innerHTML = html;
+
+
+// Generar opciones
+
+const opciones = [count];
+
+mientras (opciones.longitud < 4) {
+
+const num = Math.floor(Math.random() * (count + 5)) + 1;
+
+Si (!options.includes(num) && num > 0) options.push(num);
+
+}
+
+opciones.sort(() => Math.random() - 0.5);
+
+
+const optionsContainer = document.getElementById('numberOptions');
+
+opciones.forEach(num => {
+
+const btn = document.createElement('button');
+
+btn.className = 'number-btn';
+
+btn.textContent = num;
+
+btn.onclick = () => checkCountingAnswer(num, btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+}
+
+
+función checkCountingAnswer(respuesta, btn) {
+
+Si (respuesta === currentProblem.answer) {
+
+btn.classList.add('correcto');
+
+showFeedback(true, '¡Muy bien! 🎉 ');
+
+puntuación += 10;
+
+progreso = Math.min(progreso + 20, 100);
+
+actualizarPuntuación();
+
+actualizarProgreso();
+
+
+setTimeout(() => {
+
+Si (progreso >= 100) {
+
+subir de nivel();
+
+} demás {
+
+cargarJuegoDeConteo();
+
+}
+
+}, 1500);
+
+} demás {
+
+btn.classList.add('wrong');
+
+showFeedback(false, 'Intenta de nuevo 💪 ');
+
+setTimeout(() => btn.classList.remove('wrong'), 500);
+
+}
+
+}
+
+
+// Juego 2: Sumas
+
+función loadAddionGame() {
+
+const content = document.getElementById('gameContent');
+
+const max = 5 + nivel * 3;
+
+const a = Math.floor(Math.random() * max) + 1;
+
+const b = Math.floor(Math.random() * max) + 1;
+
+
+problemaActual = { a, b, respuesta: a + b };
+
+
+const html = `
+
+<div style="text-align: center;">
+
+<div class="problema-matemático">
+
+<span>${a}</span> + <span>${b}</span> =
+
+<input type="number" class="answer-input" id="answerInput" min="0" max="50">
+
+</div>
+
+<button class="check-btn" onclick="checkAdditionAnswer()">✓ Verificar</button>
+
+</div>
+
+`;
+
+
+contenido.innerHTML = html;
+
+
+// Permitir Enter para verificar
+
+document.getElementById('answerInput').addEventListener('keypress', (e) => {
+
+Si (e.key === 'Enter') comprobarAnswerAdicional();
+
+});
+
+document.getElementById('answerInput').focus();
+
+}
+
+
+función verificarAdditionAnswer() {
+
+const input = document.getElementById('answerInput');
+
+const respuesta = parseInt(input.value);
+
+
+Si (respuesta === currentProblem.answer) {
+
+input.classList.add('correcto');
+
+showFeedback(true, '¡Correcto! Eres genial ⭐ ');
+
+puntuación += 15;
+
+progreso = Math.min(progreso + 25, 100);
+
+actualizarPuntuación();
+
+actualizarProgreso();
+
+
+setTimeout(() => {
+
+Si (progreso >= 100) {
+
+subir de nivel();
+
+} demás {
+
+cargarJuegoAdicional();
+
+}
+
+}, 1500);
+
+} demás {
+
+input.classList.add('wrong');
+
+showFeedback(false, 'Casi... ¡intenta otra vez! 🤔 ');
+
+setTimeout(() => input.classList.remove('wrong'), 500);
+
+}
+
+}
+
+
+// Juego 3: Restas
+
+función loadSubtractionGame() {
+
+const content = document.getElementById('gameContent');
+
+const max = 4 + nivel * 2;
+
+const total = Math.floor(Math.random() * max) + 5;
+
+const eat = Math.floor(Math.random() * (total - 1)) + 1;
+
+
+problemaActual = { total, comer, respuesta: total - comer, comido: 0 };
+
+
+let html = '<div style="text-align: center;">';
+
+html += '<h3 style="color: #666; margin-bottom: 20px;">Toca las manzanas para comerlas 🍎 </h3>';
+
+html += '<div class="subtraction-visual">';
+
+
+// Canasta inicial
+
+html += '<div class="apple-basket">';
+
+html += '<div class="basket-label">Tenemos</div>';
+
+html += `<div class="apples" id="applesContainer">`;
+
+para (sea i = 0; i < total; i++) {
+
+html += `<span class="apple" onclick="eatApple(this)" data-index="${i}"> 🍎 </span>`;
+
+}
+
+html += '</div>';
+
+html += `<div style="font-size: 1.5em; margin-top: 10px; color: #667eea; font-weight: 900;">${total}</div>`;
+
+html += '</div>';
+
+
+// Signo menos
+
+html += '<div class="minus-sign">−</div>';
+
+
+// Manzanas comidas
+
+html += '<div class="apple-basket">';
+
+html += '<div class="basket-label">Nos comemos</div>';
+
+html += `<div class="apples" style="background: #ffebee;" id="eatenApples">`;
+
+para (sea i = 0; i < comer; i++) {
+
+html += `<span class="apple eaten"> 🍎 </span>`;
+
+}
+
+html += '</div>';
+
+html += `<div style="font-size: 1.5em; margin-top: 10px; color: #ff6b6b; font-weight: 900;">${eat}</div>`;
+
+html += '</div>';
+
+
+html += '</div>';
+
+
+html += '<div style="margin-top: 30px; font-size: 2em; color: #333; font-weight: 900;">';
+
+html += '¿Cuántas manzanas quedan? = <span style="color: #667eea;" id="remainingDisplay">?</span>';
+
+html += '</div>';
+
+
+html += '<div class="number-options" style="margin-top: 30px;" id="subtractionOptions"></div>';
+
+html += '</div>';
+
+
+contenido.innerHTML = html;
+
+
+// Opciones
+
+const opciones = [total - comer];
+
+mientras (opciones.longitud < 4) {
+
+const num = Math.floor(Math.random() * total) + 1;
+
+Si (!options.includes(num) && num >= 0) options.push(num);
+
+}
+
+opciones.sort(() => Math.random() - 0.5);
+
+
+const optionsContainer = document.getElementById('subtractionOptions');
+
+opciones.forEach(num => {
+
+const btn = document.createElement('button');
+
+btn.className = 'number-btn';
+
+btn.textContent = num;
+
+btn.onclick = () => checkSubtractionAnswer(num, btn);
+
+optionsContainer.appendChild(btn);
+
+});
+
+}
+
+
+función comerManzana(elemento) {
+
+Si (!element.classList.contains('eaten')) {
+
+elemento.classList.add('comido');
+
+ProblemaActual.comido++;
+
+
+Si (currentProblem.eaten === currentProblem.eat) {
+
+document.getElementById('remainingDisplay').textContent = currentProblem.answer;
+
+}
+
+}
+
+}
+
+
+función comprobarRespuestaDeRestracción(respuesta, btn) {
+
+Si (respuesta === currentProblem.answer) {
+
+btn.classList.add('correcto');
+
+showFeedback(true, '¡Perfecto! 🍎✨ ');
+
+puntuación += 20;
+
+progreso = Math.min(progreso + 25, 100);
+
+actualizarPuntuación();
+
+actualizarProgreso();
+
+
+setTimeout(() => {
+
+Si (progreso >= 100) {
+
+subir de nivel();
+
+} demás {
+
+cargarJuegoDeRestracción();
+
+}
+
+}, 1500);
+
+} demás {
+
+btn.classList.add('wrong');
+
+showFeedback(false, 'Sigue contando las manzanas 🍎 ');
+
+setTimeout(() => btn.classList.remove('wrong'), 500);
+
+}
+
+}
+
+
+// Juego 4: Secuencias
+
+función loadSequenceGame() {
+
+const content = document.getElementById('gameContent');
+
+const start = Math.floor(Math.random() * 10) + 1;
+
+const step = Math.floor(Math.random() * 3) + 1;
+
+const hiddenIndex = Math.floor(Math.random() * 4) + 1;
+
+
+const secuencia = [];
+
+para (sea i = 0; i < 5; i++) {
+
+secuencia.push(inicio + (i * paso));
+
+}
+
+
+problemaActual = { secuencia, índiceOculto, respuesta: secuencia[índiceOculto] };
+
+
+let html = '<div style="text-align: center;">';
+
+html += '<h3 style="color: #666; margin-bottom: 20px;">¿Qué número sigue en la secuencia?</h3>';
+
+html += '<div class="sequence-container" id="sequenceContainer">';
+
+
+secuencia.forEach((num, idx) => {
+
+si (idx === hiddenIndex) {
+
+html += `<div class="sequence-box empty" id="emptyBox" onclick="selectEmptyBox()">?</div>`;
+
+} demás {
+
+html += `<div class="sequence-box filled">${num}</div>`;
+
+}
+
+});
+
+
+html += '</div>';
+
+
+// Opciones
+
+const opciones = [secuencia[índice oculto]];
+
+mientras (opciones.longitud < 3) {
+
+const num = sequence[hiddenIndex] + Math.floor(Math.random() * 10) - 5;
+
+Si (!options.includes(num) && num > 0) options.push(num);
+
+}
+
+opciones.sort(() => Math.random() - 0.5);
+
+
+html += '<div class="sequence-options" id="sequenceOptions">';
+
+opciones.forEach(num => {
+
+html += `<div class="option-bubble" onclick="selectSequenceOption(${num}, this)">${num}</div>`;
+
+});
+
+html += '</div>';
+
+
+html += '</div>';
+
+contenido.innerHTML = html;
+
+}
+
+
+sea ​​OpciónSeleccionada = nulo;
+
+
+función selectSequenceOption(num, element) {
+
+document.querySelectorAll('.option-bubble').forEach(el => el.classList.remove('selected'));
+
+elemento.classList.add('seleccionado');
+
+Opción seleccionada = num;
+
+
+const emptyBox = document.getElementById('emptyBox');
+
+emptyBox.textContent = num;
+
+emptyBox.style.background = '#ffd700';
+
+
+setTimeout(() => checkSequenceAnswer(num), 500);
+
+}
+
+
+función checkSequenceAnswer(respuesta) {
+
+Si (respuesta === currentProblem.answer) {
+
+const emptyBox = document.getElementById('emptyBox');
+
+emptyBox.style.background = '#4cd964';
+
+emptyBox.style.color = 'blanco';
+
+
+showFeedback(true, '¡Descubre el patrón! 🔍✨ ');
+
+puntuación += 25;
+
+progreso = Math.min(progreso + 25, 100);
+
+actualizarPuntuación();
+
+actualizarProgreso();
+
+
+setTimeout(() => {
+
+Si (progreso >= 100) {
+
+subir de nivel();
+
+} demás {
+
+cargarSecuenciaJuego();
+
+}
+
+}, 1500);
+
+} demás {
+
+const emptyBox = document.getElementById('emptyBox');
+
+emptyBox.style.background = '#ff6b6b';
+
+emptyBox.style.color = 'blanco';
+
+
+showFeedback(false, 'Observa bien los números 🔢 ');
+
+
+setTimeout(() => {
+
+emptyBox.textContent = '?';
+
+emptyBox.style.background = '#f0f0f0';
+
+emptyBox.style.color = 'inherit';
+
+document.querySelectorAll('.option-bubble').forEach(el => el.classList.remove('selected'));
+
+}, 1000);
+
+}
+
+}
+
+
+// Sistema de puntuación y niveles
+
+función updateScore() {
+
+document.getElementById('score').textContent = score;
+
+
+// Actualizar estrellas visuales
+
+const estrellas = Math.floor(puntuación / 50) + 3;
+
+let starsText = '';
+
+para (let i = 0; i < Math.min(estrellas, 5); i++) starsText += ' 🌟 ';
+
+document.getElementById('starsCount').textContent = estrellasText || ' 🌟 ';
+
+}
+
+
+función levelUp() {
+
+nivel++;
+
+progreso = 0;
+
+actualizarProgreso();
+
+document.getElementById('level').textContent = level;
+
+
+showFeedback(true, `¡Subiste al Nivel ${level}! 🚀🎊 `);
+
+crearConfeti();
+
+
+setTimeout(() => {
+
+cargarJuego();
+
+}, 2000);
+
+}
+
+
+// Retroalimentación visual
+
+función mostrarComentarios(éxito, mensaje) {
+
+const superposición = document.getElementById('superposición');
+
+const feedback = document.getElementById('feedback');
+
+const icon = document.getElementById('feedbackIcon');
+
+const texto = document.getElementById('feedbackText');
+
+
+icono.textContent = éxito ? ' 🎉 ' : ' 🤔 ';
+
+texto.textoContenido = mensaje;
+
+text.style.color = éxito ? '#4cd964' : '#ff6b6b';
+
+
+superposición.classList.add('show');
+
+feedback.classList.add('show');
+
+
+si (éxito) crearConfeti();
+
+
+setTimeout(() => {
+
+superposición.classList.remove('show');
+
+feedback.classList.remove('show');
+
+}, 1500);
+
+}
+
+
+// Efecto de confeti
+
+función crearConfeti() {
+
+para (sea i = 0; i < 30; i++) {
+
+const confetti = document.createElement('div');
+
+confeti.className = 'confeti';
+
+confeti.estilo.izquierda = Math.random() * 100 + '%';
+
+confeti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+confeti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+
+documento.cuerpo.añadirHijo(confeti);
+
+
+setTimeout(() => confetti.remove(), 4000);
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
